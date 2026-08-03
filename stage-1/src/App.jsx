@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
   const [expenses, setExpenses] = useState([]);
+  const [editingExpense, setEditingExpense] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
@@ -48,15 +49,63 @@ const filteredExpenses = expenses.filter((expense) => {
   return matchesSearch && matchesCategory;
 
 });
+const currentDate = new Date();
+
+const currentMonthExpenses = expenses.filter((expense) => {
+
+  const expenseDate = new Date(expense.date);
+
+  return (
+    expenseDate.getMonth() === currentDate.getMonth() &&
+    expenseDate.getFullYear() === currentDate.getFullYear()
+  );
+
+});
+
+const total = currentMonthExpenses.reduce(
+  (sum, expense) => sum + expense.amount,
+  0
+);
+
+const categories = ["Food", "Travel", "Rent", "Fun", "Other"];
+
+const categoryTotals = {};
+
+categories.forEach((category) => {
+
+  categoryTotals[category] = currentMonthExpenses
+    .filter((expense) => expense.category === category)
+    .reduce((sum, expense) => sum + expense.amount, 0);
+
+});
   return (
   <div className="app">
 
     <Header />
 
     <ExpenseForm
-      expenses={expenses}
-      setExpenses={setExpenses}
-    />
+  expenses={expenses}
+  setExpenses={setExpenses}
+  editingExpense={editingExpense}
+  setEditingExpense={setEditingExpense}
+/>
+    <section className="summary-card">
+
+  <h2>Current Month Summary</h2>
+
+  <h3>Total : ₹ {total}</h3>
+
+  {categories.map((category) => (
+
+    <p key={category}>
+
+      <strong>{category}</strong> : ₹ {categoryTotals[category]}
+
+    </p>
+
+  ))}
+
+</section>
 
     <input
       type="text"
@@ -83,6 +132,8 @@ const filteredExpenses = expenses.filter((expense) => {
       expenses={filteredExpenses}
       deleteExpense={deleteExpense}
       totalExpenses={expenses.length}
+      editingExpense={editingExpense}
+      setEditingExpense={setEditingExpense}
     />
 
   </div>

@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function ExpenseForm({ expenses, setExpenses }) {
+function ExpenseForm({
+  expenses,
+  setExpenses,
+  editingExpense,
+  setEditingExpense
+}) {
 
   const [formData, setFormData] = useState({
     description: "",
@@ -15,6 +20,15 @@ function ExpenseForm({ expenses, setExpenses }) {
   amount: "",
   date: "",
 });
+useEffect(() => {
+
+  if (editingExpense) {
+
+    setFormData(editingExpense);
+
+  }
+
+}, [editingExpense]);
 
   const handleChange = (event) => {
 
@@ -70,18 +84,39 @@ const handleSubmit = (event) => {
     return;
   }
 
+  let updatedExpenses;
+
+if (editingExpense) {
+
+  updatedExpenses = expenses.map((expense) =>
+
+    expense.id === editingExpense.id
+      ? {
+          ...formData,
+          id: editingExpense.id,
+          amount: Number(formData.amount),
+        }
+      : expense
+
+  );
+
+} else {
+
   const expense = {
     id: Date.now(),
     ...formData,
     amount: Number(formData.amount),
   };
 
-  const updatedExpenses = [
+  updatedExpenses = [
     expense,
     ...expenses,
   ];
 
+}
+
   setExpenses(updatedExpenses);
+  setEditingExpense(null);
 
   localStorage.setItem(
     "expenses",
@@ -164,8 +199,10 @@ const handleSubmit = (event) => {
       />
 
       <button type="submit">
-        Add Expense
-      </button>
+  {editingExpense
+    ? "Update Expense"
+    : "Add Expense"}
+</button>
 
     </form>
   );

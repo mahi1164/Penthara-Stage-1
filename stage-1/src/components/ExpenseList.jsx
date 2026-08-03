@@ -1,4 +1,4 @@
-function ExpenseList({ expenses, deleteExpense }) {
+function ExpenseList({ expenses, deleteExpense, totalExpenses, editingExpense, setEditingExpense }) {
 
   return (
     <section className="expense-list">
@@ -39,6 +39,12 @@ function ExpenseList({ expenses, deleteExpense }) {
                 <strong>Note:</strong> {expense.note}
               </p>
             )}
+            <button
+               className="edit-btn"
+               onClick={() => setEditingExpense(expense)}
+            >
+             Edit
+            </button>
 
             <button
               className="delete-btn"
