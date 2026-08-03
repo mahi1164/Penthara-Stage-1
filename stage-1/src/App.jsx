@@ -7,6 +7,7 @@ import "./App.css";
 function App() {
   const [expenses, setExpenses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
 
   const savedExpenses = JSON.parse(
@@ -33,32 +34,59 @@ const deleteExpense = (id) => {
     );
 
 };
-const filteredExpenses = expenses.filter((expense) =>
-  expense.description
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase())
-);
-  return (
-    <div className="app">
-      <Header />
+const filteredExpenses = expenses.filter((expense) => {
 
-      <ExpenseForm
-        expenses={expenses}
-        setExpenses={setExpenses}
-      />
-      <input
-  type="text"
-  className="search-box"
-  placeholder="Search expenses..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-/>
-      <ExpenseList
-    expenses={filteredExpenses}
-    deleteExpense={deleteExpense}
-/>
-    </div>
-  );
+  const matchesSearch =
+    expense.description
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  const matchesCategory =
+    selectedCategory === "" ||
+    expense.category === selectedCategory;
+
+  return matchesSearch && matchesCategory;
+
+});
+  return (
+  <div className="app">
+
+    <Header />
+
+    <ExpenseForm
+      expenses={expenses}
+      setExpenses={setExpenses}
+    />
+
+    <input
+      type="text"
+      className="search-box"
+      placeholder="Search by description..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+
+    <select
+      className="filter-box"
+      value={selectedCategory}
+      onChange={(e) => setSelectedCategory(e.target.value)}
+    >
+      <option value="">All Categories</option>
+      <option value="Food">Food</option>
+      <option value="Travel">Travel</option>
+      <option value="Rent">Rent</option>
+      <option value="Fun">Fun</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <ExpenseList
+      expenses={filteredExpenses}
+      deleteExpense={deleteExpense}
+      totalExpenses={expenses.length}
+    />
+
+  </div>
+);
 }
 
 export default App;
