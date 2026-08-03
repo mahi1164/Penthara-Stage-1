@@ -109,3 +109,12 @@ form button:hover{
 .delete-btn:hover{
     background:#b91c1c;
 }
+
+.search-box{
+    width:100%;
+    padding:12px;
+    margin-bottom:20px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:16px;
+}

@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
   const [expenses, setExpenses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
 
   const savedExpenses = JSON.parse(
@@ -32,7 +33,11 @@ const deleteExpense = (id) => {
     );
 
 };
-
+const filteredExpenses = expenses.filter((expense) =>
+  expense.description
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase())
+);
   return (
     <div className="app">
       <Header />
@@ -41,9 +46,15 @@ const deleteExpense = (id) => {
         expenses={expenses}
         setExpenses={setExpenses}
       />
-
+      <input
+  type="text"
+  className="search-box"
+  placeholder="Search expenses..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>
       <ExpenseList
-    expenses={expenses}
+    expenses={filteredExpenses}
     deleteExpense={deleteExpense}
 />
     </div>
