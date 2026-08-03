@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function ExpenseForm({
   expenses,
@@ -20,11 +20,19 @@ function ExpenseForm({
   amount: "",
   date: "",
 });
+
+const formRef = useRef(null);
+
 useEffect(() => {
 
   if (editingExpense) {
 
     setFormData(editingExpense);
+
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
 
   }
 
@@ -135,7 +143,7 @@ if (editingExpense) {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit}>
 
       <h2>Add Expense</h2>
 
