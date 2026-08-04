@@ -35,7 +35,8 @@ const deleteExpense = (id) => {
     );
 
 };
-const filteredExpenses = expenses.filter((expense) => {
+const filteredExpenses = expenses
+.filter((expense) => {
 
   const matchesSearch =
     expense.description
@@ -48,7 +49,12 @@ const filteredExpenses = expenses.filter((expense) => {
 
   return matchesSearch && matchesCategory;
 
-});
+})
+.sort((a, b) => 
+    new Date(b.date) - new Date(a.date)
+  );
+
+
 const currentDate = new Date();
 
 const currentMonthExpenses = expenses.filter((expense) => {
