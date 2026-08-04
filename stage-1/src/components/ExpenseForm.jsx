@@ -16,8 +16,9 @@ function ExpenseForm({
   });
 
   const [errors, setErrors] = useState({
-  description: "", 
+  description: "",
   amount: "",
+  category: "",
   date: "",
 });
 
@@ -38,57 +39,76 @@ useEffect(() => {
 
 }, [editingExpense]);
 
-  const handleChange = (event) => {
-
-    const { name, value } = event.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-  };
-const validateForm = () => {
+const validateForm = (data) => {
 
   const newErrors = {
-    description: "",
-    amount: "",
-    date: "",
+  description: "",
+  amount: "",
+  category: "",
+  date: "",
   };
 
-  if (formData.description.trim().length < 3) {
+  if (data.description.trim().length < 3) {
     newErrors.description =
       "Description must be at least 3 characters.";
   }
 
   if (
-    Number(formData.amount) <= 0 ||
-    formData.amount === ""
+    Number(data.amount) <= 0 ||
+    data.amount === ""
   ) {
     newErrors.amount =
       "Amount must be greater than 0.";
   }
+  if (data.category === "") {
+  newErrors.category =
+    "Please select a category.";
+}
 
-  if (
-    formData.date &&
-    new Date(formData.date) > new Date()
-  ) {
-    newErrors.date =
-      "Future dates are not allowed.";
-  }
+  if (data.date === "") {
+
+  newErrors.date =
+    "Please select a date.";
+
+} else if (
+  new Date(data.date) > new Date()
+) {
+
+  newErrors.date =
+    "Future dates are not allowed.";
+
+}
 
   setErrors(newErrors);
 
   return Object.values(newErrors).every(
     (error) => error === ""
   );
+
+  
 };
+
+  const handleChange = (event) => {
+
+  const { name, value } = event.target;
+
+  const updatedFormData = {
+    ...formData,
+    [name]: value,
+  };
+
+  setFormData(updatedFormData);
+
+  validateForm(updatedFormData);
+
+};
+
 
 const handleSubmit = (event) => {
 
   event.preventDefault();
 
-  if (!validateForm()) {
+  if (!validateForm(formData)) {
     return;
   }
 
@@ -185,6 +205,12 @@ if (editingExpense) {
         <option value="Fun">Fun</option>
         <option value="Other">Other</option>
       </select>
+
+      {errors.category && (
+  <p className="error">
+    {errors.category}
+  </p>
+)}
 
       <input
         type="date"
