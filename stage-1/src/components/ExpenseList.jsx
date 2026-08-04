@@ -7,11 +7,21 @@ function ExpenseList({ expenses, deleteExpense, totalExpenses, editingExpense, s
 
       {expenses.length === 0 ? (
 
-        <p className="empty-message">
-          No expenses yet.
-        </p>
+  totalExpenses === 0 ? (
 
-      ) : (
+    <p className="empty-message">
+      No expenses yet.
+    </p>
+
+  ) : (
+
+    <p className="empty-message">
+      No expenses match your search or filter.
+    </p>
+
+  )
+
+) : (
 
         expenses.map((expense) => (
 
