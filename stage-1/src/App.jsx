@@ -9,6 +9,7 @@ function App() {
   const [editingExpense, setEditingExpense] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  
   useEffect(() => {
 
   const savedExpenses = JSON.parse(
@@ -20,6 +21,9 @@ function App() {
   }
 
 }, []);
+
+
+
 const deleteExpense = (id) => {
 
     const updatedExpenses =
@@ -57,7 +61,7 @@ const filteredExpenses = expenses
 
 const currentDate = new Date();
 
-const currentMonthExpenses = expenses.filter((expense) => {
+const currentMonthExpenses = filteredExpenses.filter((expense) => {
 
   const expenseDate = new Date(expense.date);
 
