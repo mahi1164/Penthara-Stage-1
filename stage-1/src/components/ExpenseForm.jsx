@@ -52,14 +52,16 @@ const validateForm = (data) => {
     newErrors.description =
       "Description must be at least 3 characters.";
   }
+  const amount = Number(data.amount);
 
   if (
-    Number(data.amount) <= 0 ||
-    data.amount === ""
-  ) {
-    newErrors.amount =
-      "Amount must be greater than 0.";
-  }
+  data.amount === "" ||
+  !Number.isFinite(amount) ||
+  amount <= 0
+) {
+  newErrors.amount =
+    "Amount must be greater than 0.";
+}
   if (data.category === "") {
   newErrors.category =
     "Please select a category.";
