@@ -167,7 +167,11 @@ if (editingExpense) {
   return (
     <form ref={formRef} onSubmit={handleSubmit}>
 
-      <h2>Add Expense</h2>
+      <h2>
+      {editingExpense
+      ? "Update Expense"
+      : "Add Expense"}
+      </h2>
 
       <input
         type="text"
@@ -235,10 +239,38 @@ if (editingExpense) {
       />
 
       <button type="submit">
-  {editingExpense
-    ? "Update Expense"
-    : "Add Expense"}
-</button>
+       {editingExpense
+        ? "Update Expense"
+        : "Add Expense"}
+      </button>
+      {editingExpense && (
+   
+   <button
+    type="button"
+    onClick={() => {
+
+      setEditingExpense(null);
+
+      setFormData({
+        description: "",
+        amount: "",
+        category: "",
+        date: "",
+        note: "",
+      });
+
+      setErrors({
+        description: "",
+        amount: "",
+        category: "",
+        date: "",
+      });
+
+    }}
+  >
+    Cancel
+  </button>
+)}
 
     </form>
   );
