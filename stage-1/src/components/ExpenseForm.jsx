@@ -30,6 +30,13 @@ useEffect(() => {
 
     setFormData(editingExpense);
 
+  setErrors({
+  description: "",
+  amount: "",
+  category: "",
+  date: "",
+  });
+
     formRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
