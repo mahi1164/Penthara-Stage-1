@@ -33,7 +33,8 @@ function ExpenseList({ expenses, deleteExpense, totalExpenses, editingExpense, s
             <h3>{expense.description}</h3>
 
             <p>
-              <strong>Amount:</strong> ₹ {expense.amount}
+              <strong>Amount:</strong> ₹ {expense.amount.toLocaleString("en-IN", {
+                                          minimumFractionDigits: 2, maximumFractionDigits: 2,},)}
             </p>
 
             <p>
@@ -41,7 +42,11 @@ function ExpenseList({ expenses, deleteExpense, totalExpenses, editingExpense, s
             </p>
 
             <p>
-              <strong>Date:</strong> {expense.date}
+              <strong>Date:</strong> {new Date(expense.date).toLocaleDateString("en-IN", {
+                                                day: "2-digit",
+                                                month: "short",
+                                                year: "numeric",
+                                              })}
             </p>
 
             {expense.note && (

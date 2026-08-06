@@ -33,6 +33,13 @@ const deleteExpense = (id) => {
 
     setExpenses(updatedExpenses);
 
+    if (
+  editingExpense &&
+  editingExpense.id === id
+) {
+  setEditingExpense(null);
+}
+
     localStorage.setItem(
         "expenses",
         JSON.stringify(updatedExpenses)
@@ -101,15 +108,21 @@ categories.forEach((category) => {
 />
     <section className="summary-card">
 
-  <h2>Current Month Summary</h2>
+  <h2>Visible Current Month Summary</h2>
 
-  <h3>Total : ₹ {total}</h3>
+  <h3>Total : ₹ {total.toLocaleString("en-IN", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})}</h3>
 
   {categories.map((category) => (
 
     <p key={category}>
 
-      <strong>{category}</strong> : ₹ {categoryTotals[category]}
+      <strong>{category}</strong> : ₹ {categoryTotals[category].toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}
 
     </p>
 
