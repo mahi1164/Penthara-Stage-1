@@ -27,7 +27,6 @@ const formRef = useRef(null);
 useEffect(() => {
 
   if (editingExpense) {
-
     setFormData(editingExpense);
 
     setErrors({

@@ -1,4 +1,4 @@
-function ExpenseList({ expenses, deleteExpense, totalExpenses, editingExpense, setEditingExpense }) {
+function ExpenseList({ expenses, deleteExpense, totalExpenses, setEditingExpense }) {
 
   return (
     <section className="expense-list">

@@ -155,7 +155,6 @@ categories.forEach((category) => {
       expenses={filteredExpenses}
       deleteExpense={deleteExpense}
       totalExpenses={expenses.length}
-      editingExpense={editingExpense}
       setEditingExpense={setEditingExpense}
     />
 
