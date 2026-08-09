@@ -141,3 +141,5 @@ This project successfully implements all the required Stage 1 functionality, inc
 During development, the primary focus was maintaining a single source of truth for expense data while ensuring edit mode, validation, filtering, sorting, and monthly summaries remained synchronized after every user action.
 
 The application was manually regression tested across all major workflows and common edge cases to ensure consistent behaviour before submission.
+
+Git practice branch.
