@@ -43,7 +43,7 @@ useEffect(() => {
 
   localStorage.setItem(
     "expenses",
-    JSON.stringify(expenses)
+    JSON.stringify(updatedExpenses)
   );
 
   setFormData({
