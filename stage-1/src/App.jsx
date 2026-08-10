@@ -3,7 +3,7 @@ const currentMonthExpenses = filteredExpenses.filter((expense) => {
   const expenseDate = new Date(expense.date);
 
   return (
-    expenseDate.getMonth() === currentDate.getMonth() - 1 &&
+    expenseDate.getMonth() === currentDate.getMonth() &&
     expenseDate.getFullYear() === currentDate.getFullYear()
   );
 
